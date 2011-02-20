@@ -16,5 +16,7 @@ h1.site-name {
 
 #header {
     background-color: #48A9E4;
-    background-image: -moz-linear-gradient(-90deg, #0779BF, #48A9E4);
+    background-image: url('../images/bg_header.png');
+    background-repeat: repeat-x;
+/*    background-image: -moz-linear-gradient(-90deg, #0779BF, #48A9E4);*/
 }
