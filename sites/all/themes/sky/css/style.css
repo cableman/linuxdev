@@ -106,8 +106,10 @@ h2.block-title {
   margin: 0 0 0.4em 0;
 }
 h1.site-name { /* 48px */
+  position: relative;
+  top: 14px;
   font-size: 3.692em;
-  margin: 0 0 0.2em 0;
+  margin: 0 0 0.2em 2em;
   padding: 0;
 }
 h2.site-slogan {
@@ -116,6 +118,9 @@ h2.site-slogan {
   padding: 0;
 }
 
+#header a {
+  float: left;
+}
 
 /* Lists
 -------------------------------------------------------------------------*/

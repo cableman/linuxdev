@@ -9,11 +9,11 @@
   <header id="header" class="section section-header clearfix" role="banner">
     <?php if ($site_name || $site_slogan || $logo): ?>
       <hgroup class="grid-10">
-        <?php if ($site_name): ?>
-          <h1 class="site-name"><a title="<?php print t('Home'); ?>" rel="home" href="<?php print $front_page; ?>"><?php print $site_name; ?></a></h1>
-        <?php endif; ?>
         <?php if ($logo): ?>
           <a title="<?php print t('Home'); ?>" rel="home" href="<?php print $front_page; ?>"><img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>"/></a>
+        <?php endif; ?>
+        <?php if ($site_name): ?>
+          <h1 class="site-name"><a title="<?php print t('Home'); ?>" rel="home" href="<?php print $front_page; ?>"><?php print $site_name; ?></a></h1>
         <?php endif; ?>
         <?php if ($site_slogan): ?>
           <h2 class="site-slogan"><?php print $site_slogan; ?></h2>
