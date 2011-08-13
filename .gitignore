@@ -1,18 +1,7 @@
-*.esproj
-*.kpf
-*.tmproj
-.cache
-.project
-.settings
-*/_notes
-nbproject
-.DS_Store
-._*
-/sites/default/settings.php
-/sites/default/files
-/files
-/backup
-/backups
-CVS
-*.patch
-*~
+# Ignore configuration files that may contain sensitive information.
+sites/*/settings*.php
+
+# Ignore paths that contain user-generated content.
+sites/*/files
+sites/*/private
+/nbproject/private/
