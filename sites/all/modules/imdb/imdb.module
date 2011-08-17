@@ -1,0 +1,20 @@
+<?php
+
+function imdb_menu() {
+  $items = array();
+
+  $items['admin/config/services/imdb'] = array(
+    'title' => 'IMDB',
+    'description' => 'Configure IMDB',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('imdb_administration_form'),
+  );
+
+  return $items;
+}
+
+function imdb_administration_form() {
+  $form = array();
+  
+  return system_settings_form($form);
+}
