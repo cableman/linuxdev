@@ -6,7 +6,28 @@
 
     // Add click action
     button.click(function () {
-      
+      $(this).attr("disabled", "true");
+      id = $('#edit-field-imdb-id-und-0-value').val();
+      $.get('/callback/imdb/'+id, function(response) {
+        imdb = jQuery.parseJSON(response);
+
+        // Fill out the form.
+        $('#edit-title').val(imdb.data.Title);
+        $('#edit-field-year-und-0-value-date').val(imdb.data.Year);
+        $('#edit-field-reated-und-0-value').val(imdb.data.Rated);
+        $('#edit-field-released-und-0-value-date').val(imdb.data.Released);
+        $('#edit-field-genre-und').val(imdb.data.Genre);
+        $('#edit-field-director-und-0-value').val(imdb.data.Director);
+        $('#edit-field-writer-und-0-value').val(imdb.data.Writer);
+        $('#edit-field-actors-und-0-value').val(imdb.data.Actors);
+        $('#edit-field-plot-und-0-value').val(imdb.data.Plot);
+
+        // Add post location.
+
+        $('#edit-field-runtime-und-0-value').val(imdb.data.Runtime);
+        $('#edit-field-rating-und-0-value').val(imdb.data.Rating);
+        $('#edit-field-votes-und-0-value').val(imdb.data.Votes);
+      });
     });
   });
 })(jQuery);
