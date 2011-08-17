@@ -17,9 +17,9 @@
         $('#edit-field-reated-und-0-value').val(imdb.data.Rated);
         $('#edit-field-released-und-0-value-date').val(imdb.data.Released);
         $('#edit-field-genre-und').val(imdb.data.Genre);
-        $('#edit-field-director-und-0-value').val(imdb.data.Director);
-        $('#edit-field-writer-und-0-value').val(imdb.data.Writer);
-        $('#edit-field-actors-und-0-value').val(imdb.data.Actors);
+        $('#edit-field-directors-und').val(imdb.data.Director);
+        $('#edit-field-writers-und').val(imdb.data.Writer);
+        $('#edit-field-actors-und').val(imdb.data.Actors);
         $('#edit-field-plot-und-0-value').val(imdb.data.Plot);
 
         // Add post location.
