@@ -6,8 +6,18 @@ function imdb_menu() {
   $items['admin/config/services/imdb'] = array(
     'title' => 'IMDB',
     'description' => 'Configure IMDB',
+    'access arguments' => array('administer site configuration'),
     'page callback' => 'drupal_get_form',
     'page arguments' => array('imdb_administration_form'),
+  );
+
+  $items['callback/imdb/%'] = array(
+    'title' => 'IMDB callback',
+    'description' => 'IMDB web-service callback',
+    'access arguments' => array('administer site configuration'),
+    'page callback' => 'imdb_callback',
+    'page arguments' => array(2),
+    'type' => MENU_CALLBACK,
   );
 
   return $items;
@@ -16,5 +26,39 @@ function imdb_menu() {
 function imdb_administration_form() {
   $form = array();
   
+  $default = variable_get('imdb_end_point', FALSE);
+  $form['imdb_end_point'] = array(
+    '#type' => 'textfield',
+    '#title' => t('IMDB end-point'),
+    '#default_value' => $default ? $default : 'http://www.imdbapi.com/',
+  );
+
   return system_settings_form($form);
+}
+
+function imdb_form_alter(&$form, &$form_state, $form_id) {
+  if (isset($form['#node_edit_form']) && $form['#node_edit_form'] && $form['type']['#value'] == 'movie') {
+    drupal_add_js(drupal_get_path('module', 'imdb') . '/js/imdb.js');
+  }
+}
+
+function imdb_callback($imdb_id) {
+  // Connect to imdb api and get information.
+  $end_point = variable_get('imdb_end_point', 'http://www.imdbapi.com/');
+  $object = drupal_http_request($end_point . '?i=' . $imdb_id . '&plot=full');
+
+  // Create data array with movie information.
+  $data = array(
+    'error' => TRUE,
+  );
+  if ($object->status_message == 'OK') {
+    $data['error'] = FALSE;
+    $data['data'] = json_decode($object->data);
+
+    // Download poster.
+    
+  }
+
+  // Return data encode as json.
+  echo drupal_json_encode($data);
 }
