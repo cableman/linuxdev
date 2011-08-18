@@ -39,6 +39,19 @@ function imdb_administration_form() {
 function imdb_form_alter(&$form, &$form_state, $form_id) {
   if (isset($form['#node_edit_form']) && $form['#node_edit_form'] && $form['type']['#value'] == 'movie') {
     drupal_add_js(drupal_get_path('module', 'imdb') . '/js/imdb.js');
+
+    // Create thumbnail.
+    if (!empty($form_state['node']->field_poster['und'][0]['safe_value'])) {
+      $image = array(
+        'style_name' => 'medium',
+        'path' => $form_state['node']->field_poster['und'][0]['safe_value'],
+        'alt' => t('Poster preview'),
+        'title' => t('Poster preview'),
+      );
+      $form['field_poster']['image'] = array(
+        '#markup' => theme('image_style', $image),
+      );
+    }
   }
 }
 
@@ -56,9 +69,37 @@ function imdb_callback($imdb_id) {
     $data['data'] = json_decode($object->data);
 
     // Download poster.
-    
+    $data['data']->Poster = imdb_download_poster($data['data']->Poster);
+
+    // Create thumbnail.
+    $image = array(
+      'style_name' => 'medium',
+      'path' => $data['data']->Poster,
+      'alt' => t('Poster preview'),
+      'title' => t('Poster preview'),
+    );
+    $data['data']->Thumbnail = theme('image_style', $image);
   }
 
   // Return data encode as json.
   echo drupal_json_encode($data);
+}
+
+function imdb_download_poster($url) {
+  $result = drupal_http_request($url);
+
+  if ($result->code == 200) {
+    $folder = file_default_scheme() . '://imdb_poster';
+    $destination = $folder . '/' . array_pop(split('/', $url));
+    
+    if (file_prepare_directory($folder, FILE_CREATE_DIRECTORY)) {
+      $file = file_save_data($result->data, $destination, FILE_EXISTS_ERROR);
+      if (!$file) {
+        // File exists.
+        return $destination;
+      }
+      return $file->uri;
+    }
+  }
+  return FALSE;
 }

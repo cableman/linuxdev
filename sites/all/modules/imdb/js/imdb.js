@@ -4,6 +4,10 @@
     $('#edit-field-imdb-id-und-0-value').parent().append(button);
     button.show();
 
+    if ($('#edit-field-poster img').length) {
+      $('#edit-field-poster-und-0-value').hide();
+    }
+
     // Add click action
     button.click(function () {
       $(this).attr("disabled", "true");
@@ -23,10 +27,22 @@
         $('#edit-field-plot-und-0-value').val(imdb.data.Plot);
 
         // Add post location.
+        $('#edit-field-poster-und-0-value').val(imdb.data.Poster);
+
+        // Insert thumbnail.
+        if ($('#edit-field-poster img').length) {
+          $('#edit-field-poster img').hide();
+        }
+        $('#edit-field-poster-und-0-value').parent().append(imdb.data.Thumbnail);
+        $('#edit-field-poster-und-0-value').hide();
+
 
         $('#edit-field-runtime-und-0-value').val(imdb.data.Runtime);
         $('#edit-field-rating-und-0-value').val(imdb.data.Rating);
         $('#edit-field-votes-und-0-value').val(imdb.data.Votes);
+
+
+        $('#imdb-button').removeAttr("disabled");
       });
     });
   });
